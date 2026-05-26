@@ -111,3 +111,14 @@ const val ASK_FOR_TITLE = "ask_for_title"
 
 const val DEFAULT_RECORDINGS_FOLDER = "Recordings"
 const val DEFAULT_FILENAME_PATTERN = "%Y%M%D_%h%m%s"
+
+const val EXTRA_RECORDING = "recording"
+
+fun getAudioMimeType(extension: Int): String {
+    return when (extension) {
+        EXTENSION_M4A -> "audio/x-m4a"
+        EXTENSION_MP3 -> "audio/mpeg"
+        EXTENSION_OGG -> "audio/ogg"
+        else -> "audio/wav"
+    }
+}
