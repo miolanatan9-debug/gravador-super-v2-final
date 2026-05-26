@@ -26,9 +26,9 @@ class TrimRecordingDialog(
             .setPositiveButton(R.string.ok, null)
             .setNegativeButton(R.string.cancel, null)
             .apply {
-                activity.setupDialogStuff(binding.root, this, R.string.trim) {
-                    dialog = it
-                    getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
+                activity.setupDialogStuff(binding.root, this, R.string.trim) { alertDialog ->
+                    dialog = alertDialog
+                    alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
                         val startText = binding.trimRecordingStart.value
                         val endText = binding.trimRecordingEnd.value
 
@@ -36,8 +36,8 @@ class TrimRecordingDialog(
                             return@setOnClickListener
                         }
 
-                        val start = startText.toInt()
-                        val end = endText.toInt()
+                        val start = try { startText.toInt() } catch (e: Exception) { 0 }
+                        val end = try { endText.toInt() } catch (e: Exception) { 0 }
 
                         if (start >= end || start < 0 || end > recording.duration) {
                             activity.showErrorToast(activity.getString(R.string.trim_error_invalid_times))
@@ -45,7 +45,7 @@ class TrimRecordingDialog(
                         }
 
                         callback(start, end)
-                        dismiss()
+                        alertDialog.dismiss()
                     }
                 }
             }
