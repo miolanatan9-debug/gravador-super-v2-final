@@ -20,6 +20,7 @@ import org.fossify.commons.extensions.updateBottomTabItemColors
 import org.fossify.commons.helpers.PERMISSION_RECORD_AUDIO
 import org.fossify.commons.helpers.PERMISSION_WRITE_STORAGE
 import org.fossify.commons.helpers.isRPlus
+import br.com.guga.gravadorsuper.BuildConfig
 import br.com.guga.gravadorsuper.R
 import br.com.guga.gravadorsuper.adapters.ViewPagerAdapter
 import br.com.guga.gravadorsuper.databinding.ActivityMainBinding
