@@ -6,7 +6,6 @@ import android.media.MediaRecorder
 import androidx.core.content.edit
 import org.fossify.commons.helpers.BaseConfig
 import br.com.guga.gravadorsuper.R
-import br.com.guga.gravadorsuper.extensions.getDefaultRecordingsFolder
 
 class Config(context: Context) : BaseConfig(context) {
     companion object {
@@ -14,7 +13,7 @@ class Config(context: Context) : BaseConfig(context) {
     }
 
     var saveRecordingsFolder: String
-        get() = prefs.getString(SAVE_RECORDINGS, context.getDefaultRecordingsFolder())!!
+        get() = prefs.getString(SAVE_RECORDINGS, DEFAULT_RECORDINGS_FOLDER)!!
         set(saveRecordingsFolder) = prefs.edit().putString(SAVE_RECORDINGS, saveRecordingsFolder)
             .apply()
 
