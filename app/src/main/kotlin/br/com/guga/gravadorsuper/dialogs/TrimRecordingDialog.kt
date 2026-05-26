@@ -25,9 +25,9 @@ class TrimRecordingDialog(
         activity.getAlertDialogBuilder()
             .setPositiveButton(R.string.ok, null)
             .setNegativeButton(R.string.cancel, null)
-            .create().apply {
+            .apply {
                 activity.setupDialogStuff(binding.root, this, R.string.trim) {
-                    dialog = this
+                    dialog = it
                     getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
                         val startText = binding.trimRecordingStart.value
                         val endText = binding.trimRecordingEnd.value
