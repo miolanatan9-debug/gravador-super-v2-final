@@ -162,15 +162,6 @@ private fun Context.getLegacyRecordingsInternal(trashed: Boolean = false): Array
     return recordings
 }
 
-private fun DocumentFile.isAudioRecording(): Boolean {
-    val name = name?.lowercase(Locale.ROOT) ?: return false
-    return name.endsWith(".wav") || name.endsWith(".m4a")
-}
-
-private fun DocumentFile.isTrashedMediaStoreRecording(): Boolean {
-    return name?.startsWith(".trashed") ?: false
-}
-
 private fun Context.readRecordingFromFile(file: DocumentFile): Recording {
     val id = file.uri.hashCode()
     val title = file.name ?: ""
