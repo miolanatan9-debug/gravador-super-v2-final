@@ -33,6 +33,7 @@ import br.com.guga.gravadorsuper.extensions.getFormattedFilename
 import br.com.guga.gravadorsuper.extensions.updateWidgets
 import br.com.guga.gravadorsuper.helpers.CANCEL_RECORDING
 import br.com.guga.gravadorsuper.helpers.EXTENSION_MP3
+import br.com.guga.gravadorsuper.helpers.EXTENSION_WAV
 import br.com.guga.gravadorsuper.helpers.GET_RECORDER_INFO
 import br.com.guga.gravadorsuper.helpers.RECORDER_RUNNING_NOTIF_ID
 import br.com.guga.gravadorsuper.helpers.RECORDING_PAUSED
