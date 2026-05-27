@@ -74,7 +74,11 @@ fun BaseSimpleActivity.deleteRecordings(
     callback: (success: Boolean) -> Unit
 ) {
     ensureBackgroundThread {
-            callback(true)
+        if (isRPlus()) {
+            val resolver = contentResolver
+            recordingsToRemove.forEach {
+                DocumentsContract.deleteDocument(resolver, it.path.toUri())
+            }
         } else {
             recordingsToRemove.forEach {
                 val fileDirItem = File(it.path).toFileDirItem(this)
@@ -112,7 +116,14 @@ fun BaseSimpleActivity.moveRecordings(
     destinationParent: String,
     callback: (success: Boolean) -> Unit
 ) {
-            callback(true)
+    if (isRPlus()) {
+        moveRecordingsSAF(
+            recordings = recordingsToMove,
+            sourceParent = sourceParent,
+            destinationParent = destinationParent,
+            callback = callback
+        )
+    } else {
         moveRecordingsLegacy(
             recordings = recordingsToMove,
             sourceParent = sourceParent,
