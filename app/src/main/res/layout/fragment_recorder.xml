@@ -53,7 +53,6 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/toggle_recording_button"
-        android:contentDescription="@string/toggle_recording_button"
         android:layout_width="@dimen/toggle_recording_button_size"
         android:layout_height="@dimen/toggle_recording_button_size"
         android:layout_marginBottom="@dimen/big_margin"
