@@ -218,11 +218,14 @@ fun BaseSimpleActivity.deleteExpiredTrashedRecordings() {
     }
 }
 
-fun BaseSimpleActivity.handlePermission(permissionId: Int, callback: (granted: Boolean) -> Unit) {
-    handlePermission(permissionId) { granted ->
-        callback(granted)
+    fun handlePermission(permissionId: Int, callback: (granted: Boolean) -> Unit) {
+        if (checkSelfPermission(permissionId) == android.content.pm.PackageManager.PERMISSION_GRANTED) {
+            callback(true)
+        } else {
+            // Chama a implementação real da base ou o sistema de permissões
+            super.handlePermission(permissionId, callback)
+        }
     }
-}
 
 fun android.view.View.beGone() {
     visibility = android.view.View.GONE
