@@ -5,6 +5,7 @@ import org.fossify.commons.extensions.getAlertDialogBuilder
 import org.fossify.commons.extensions.setupDialogStuff
 import org.fossify.commons.extensions.viewBinding
 import br.com.guga.gravadorsuper.databinding.DatetimePatternInfoLayoutBinding
+import br.com.guga.gravadorsuper.R
 
 class DateTimePatternInfoDialog(activity: BaseSimpleActivity) {
     val binding by activity.viewBinding(DatetimePatternInfoLayoutBinding::inflate)
