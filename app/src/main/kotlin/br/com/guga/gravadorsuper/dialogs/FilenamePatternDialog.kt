@@ -31,8 +31,8 @@ class FilenamePatternDialog(private val activity: SimpleActivity, private val ca
         }
 
         activity.getAlertDialogBuilder()
-            .setPositiveButton(org.fossify.commons.R.string.ok, null)
-            .setNegativeButton(org.fossify.commons.R.string.cancel, null)
+            .setPositiveButton(R.string.ok, null)
+            .setNegativeButton(R.string.cancel, null)
             .apply {
                 activity.setupDialogStuff(binding.root, this, R.string.filename_pattern) { alertDialog ->
                     dialog = alertDialog
