@@ -10,6 +10,8 @@ import android.content.Intent
 import android.media.MediaScannerConnection
 import android.net.Uri
 import android.os.IBinder
+import android.content.ContentValues
+import android.provider.MediaStore
 import android.provider.DocumentsContract
 import androidx.core.app.NotificationCompat
 import androidx.core.content.FileProvider
@@ -117,11 +119,21 @@ class RecorderService : Service() {
             }
 
             if (isRPlus()) {
-                val fileUri = createDocumentUriUsingFirstParentTreeUri(recordingPath)
-                createSAFFileSdk30(recordingPath)
+                val values = ContentValues().apply {
+                    put(MediaStore.Audio.Media.DISPLAY_NAME, getFormattedFilename())
+                    put(MediaStore.Audio.Media.MIME_TYPE, getAudioMimeType(config.extension))
+                    put(MediaStore.Audio.Media.RELATIVE_PATH, "Music/Recordings")
+                    put(MediaStore.Audio.Media.IS_PENDING, 1)
+                }
+
+                val collection = MediaStore.Audio.Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY)
+                val fileUri = contentResolver.insert(collection, values)
                 resultUri = fileUri
-                contentResolver.openFileDescriptor(fileUri, "w")!!
-                    .use { recorder?.setOutputFile(it) }
+                if (fileUri != null) {
+                    contentResolver.openFileDescriptor(fileUri, "w")?.use {
+                        recorder?.setOutputFile(it)
+                    }
+                }
             } else if (isPathOnSD(recordingPath)) {
                 var document = getDocumentFile(recordingPath.getParentPath())
                 document = document?.createFile("", recordingPath.getFilenameFromPath())
@@ -197,8 +209,7 @@ class RecorderService : Service() {
 
         recorder = null
         if (isRPlus()) {
-            val recordingUri = createDocumentUriUsingFirstParentTreeUri(recordingPath)
-            DocumentsContract.deleteDocument(contentResolver, recordingUri)
+            resultUri?.let { contentResolver.delete(it, null, null) }
         } else {
             File(recordingPath).delete()
         }
@@ -238,17 +249,25 @@ class RecorderService : Service() {
     }
 
     private fun scanRecording() {
-        MediaScannerConnection.scanFile(
-            this,
-            arrayOf(recordingPath),
-            arrayOf(recordingPath.getMimeType())
-        ) { _, uri ->
-            if (uri == null) {
-                toast(org.fossify.commons.R.string.unknown_error_occurred)
-                return@scanFile
+        if (isRPlus()) {
+            val values = ContentValues().apply {
+                put(MediaStore.Audio.Media.IS_PENDING, 0)
             }
+            resultUri?.let { contentResolver.update(it, values, null, null) }
+            recordingSavedSuccessfully(resultUri!!)
+        } else {
+            MediaScannerConnection.scanFile(
+                this,
+                arrayOf(recordingPath),
+                arrayOf(recordingPath.getMimeType())
+            ) { _, uri ->
+                if (uri == null) {
+                    toast(org.fossify.commons.R.string.unknown_error_occurred)
+                    return@scanFile
+                }
 
-            recordingSavedSuccessfully(resultUri ?: uri)
+                recordingSavedSuccessfully(resultUri ?: uri)
+            }
         }
     }
 
