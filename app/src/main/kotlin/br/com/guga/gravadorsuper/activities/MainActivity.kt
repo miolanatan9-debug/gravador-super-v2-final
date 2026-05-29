@@ -200,7 +200,7 @@ class MainActivity : SimpleActivity() {
         getAlertDialogBuilder()
             .setTitle(titleRes)
             .setMessage(contentRes)
-            .setPositiveButton(org.fossify.commons.R.string.ok, null)
+            .setPositiveButton(R.string.ok, null)
             .show()
     }
 
