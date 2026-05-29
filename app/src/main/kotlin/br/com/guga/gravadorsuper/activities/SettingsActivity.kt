@@ -355,7 +355,7 @@ class SettingsActivity : SimpleActivity() {
                     dialogTitle = getString(R.string.microphone_mode),
                     message = getString(R.string.change_microphone_mode_confirmation),
                     negative = 0,
-                    positive = org.fossify.commons.R.string.ok
+                    positive = R.string.ok
                 ) {
                     config.wasMicModeWarningShown = true
                     showMicrophoneModeDialog()
