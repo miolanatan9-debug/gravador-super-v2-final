@@ -18,7 +18,7 @@ class StoragePermissionDialog(
         view.message.text = activity.getString(R.string.confirm_recording_folder)
 
         activity.getAlertDialogBuilder()
-            .setPositiveButton(org.fossify.commons.R.string.ok) { _, _ ->
+            .setPositiveButton(R.string.ok) { _, _ ->
                 callback(true)
             }
             .apply {
