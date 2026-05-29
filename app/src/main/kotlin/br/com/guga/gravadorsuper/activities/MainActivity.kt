@@ -25,7 +25,6 @@ import br.com.guga.gravadorsuper.adapters.ViewPagerAdapter
 import br.com.guga.gravadorsuper.databinding.ActivityMainBinding
 import br.com.guga.gravadorsuper.extensions.config
 import br.com.guga.gravadorsuper.extensions.ensureStoragePermission
-import br.com.guga.gravadorsuper.extensions.handlePermission
 import org.greenrobot.eventbus.EventBus
 
 class MainActivity : SimpleActivity() {
