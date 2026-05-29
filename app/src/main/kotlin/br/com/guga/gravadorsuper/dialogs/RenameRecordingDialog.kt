@@ -16,6 +16,7 @@ import org.fossify.commons.extensions.value
 import org.fossify.commons.helpers.ensureBackgroundThread
 import org.fossify.commons.helpers.isRPlus
 import br.com.guga.gravadorsuper.databinding.DialogRenameRecordingBinding
+import br.com.guga.gravadorsuper.R
 import br.com.guga.gravadorsuper.extensions.config
 import br.com.guga.gravadorsuper.models.Events
 import br.com.guga.gravadorsuper.models.Recording
