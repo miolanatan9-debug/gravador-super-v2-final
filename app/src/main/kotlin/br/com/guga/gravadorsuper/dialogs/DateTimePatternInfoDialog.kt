@@ -11,7 +11,7 @@ class DateTimePatternInfoDialog(activity: BaseSimpleActivity) {
 
     init {
         activity.getAlertDialogBuilder()
-            .setPositiveButton(org.fossify.commons.R.string.ok) { _, _ -> { } }
+            .setPositiveButton(R.string.ok) { _, _ -> { } }
             .apply {
                 activity.setupDialogStuff(binding.root, this)
             }
