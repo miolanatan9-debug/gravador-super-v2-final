@@ -19,7 +19,7 @@ import org.fossify.commons.extensions.hideKeyboard
 import org.fossify.commons.extensions.onPageChangeListener
 import org.fossify.commons.extensions.onTabSelectionChanged
 import org.fossify.commons.extensions.toast
-import org.fossify.commons.extensions.// updateBottomTabItemColors
+import org.fossify.commons.extensions.beGone
 import org.fossify.commons.helpers.PERMISSION_RECORD_AUDIO
 import org.fossify.commons.helpers.PERMISSION_WRITE_STORAGE
 import org.fossify.commons.helpers.isRPlus
@@ -38,7 +38,6 @@ class MainActivity : SimpleActivity() {
     private var bus: EventBus? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        // isMaterialActivity = true
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -59,7 +58,6 @@ class MainActivity : SimpleActivity() {
 
         checkAppSideloading()
         appLaunched(BuildConfig.APPLICATION_ID)
-        // updateBottomTabItemColors(binding.mainTabsHolder, binding.mainTabsHolder.getBottomNavigationBackgroundColor())
         
         handleIntent(intent)
     }
@@ -75,7 +73,7 @@ class MainActivity : SimpleActivity() {
     }
 
     private fun setupOptionsMenu() {
-        binding.mainMenu.toolbar.inflateMenu(R.menu.menu_main)
+        binding.mainMenu.toolbar?.inflateMenu(R.menu.menu_main)
         binding.mainMenu.toggleHideOnScroll(false)
         binding.mainMenu.setupWithViewPager(binding.viewPager)
         binding.mainMenu.onSearchOpenListener = {
@@ -88,7 +86,7 @@ class MainActivity : SimpleActivity() {
             getPagerAdapter()?.searchTextChanged(text)
         }
 
-        binding.mainMenu.requireToolbar().setOnMenuItemClickListener { menuItem ->
+        binding.mainMenu.toolbar?.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.delete_all -> getPagerAdapter()?.deleteAll(binding.viewPager.currentItem)
                 R.id.settings -> launchSettings()
@@ -157,29 +155,33 @@ class MainActivity : SimpleActivity() {
         val adapter = ViewPagerAdapter(this, config.useRecycleBin)
         binding.viewPager.adapter = adapter
         binding.viewPager.offscreenPageLimit = 2
-        binding.viewPager.addOnPageChangeListener(onPageChangeListener { position ->
-            binding.mainTabsHolder.getTabAt(position)?.select()
+        binding.viewPager.addOnPageChangeListener(object : androidx.viewpager.widget.ViewPager.OnPageChangeListener {
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
+            override fun onPageSelected(position: Int) {
+                binding.mainTabsHolder.getTabAt(position)?.select()
+            }
+            override fun onPageScrollStateChanged(state: Int) {}
         })
 
-        binding.mainTabsHolder.onTabSelectionChanged(
-            onTabSelected = { tab ->
+        binding.mainTabsHolder.addOnTabSelectedListener(object : com.google.android.material.tabs.TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: com.google.android.material.tabs.TabLayout.Tab) {
                 binding.viewPager.currentItem = tab.position
-                // updateBottomTabItemColors(binding.mainTabsHolder, binding.mainTabsHolder.getBottomNavigationBackgroundColor(), tab.position)
             }
-        )
+            override fun onTabUnselected(tab: com.google.android.material.tabs.TabLayout.Tab) {}
+            override fun onTabReselected(tab: com.google.android.material.tabs.TabLayout.Tab) {}
+        })
 
         binding.mainTabsHolder.getTabAt(0)?.select()
-        // updateBottomTabItemColors(binding.mainTabsHolder, binding.mainTabsHolder.getBottomNavigationBackgroundColor(), 0)
 
         if (isThirdPartyIntent()) {
             binding.mainTabsHolder.beGone()
-            binding.viewPager.isUserInputEnabled = false
+            binding.viewPager.isEnabled = false
         }
     }
 
     private fun refreshMenuItems() {
-        binding.mainMenu.toolbar.menu.apply {
-            findItem(R.id.delete_all).isVisible = binding.viewPager.currentItem == 2
+        binding.mainMenu.toolbar?.menu?.apply {
+            findItem(R.id.delete_all)?.isVisible = binding.viewPager.currentItem == 2
         }
     }
 
