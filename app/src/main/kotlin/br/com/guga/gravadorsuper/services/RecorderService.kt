@@ -28,6 +28,7 @@ import org.fossify.commons.extensions.toast
 import org.fossify.commons.helpers.ensureBackgroundThread
 import org.fossify.commons.helpers.isRPlus
 import br.com.guga.gravadorsuper.BuildConfig
+import br.com.guga.gravadorsuper.helpers.getAudioMimeType
 import br.com.guga.gravadorsuper.R
 import br.com.guga.gravadorsuper.activities.SplashActivity
 import br.com.guga.gravadorsuper.extensions.config
