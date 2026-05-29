@@ -10,14 +10,10 @@ import android.provider.MediaStore
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.content.res.AppCompatResources
-import me.grantland.widget.AutofitHelper
 import org.fossify.commons.extensions.appLaunched
 import org.fossify.commons.extensions.checkAppSideloading
 import org.fossify.commons.extensions.getAlertDialogBuilder
-import org.fossify.commons.extensions.getBottomNavigationBackgroundColor
 import org.fossify.commons.extensions.hideKeyboard
-import org.fossify.commons.extensions.onPageChangeListener
-import org.fossify.commons.extensions.onTabSelectionChanged
 import org.fossify.commons.extensions.toast
 import org.fossify.commons.extensions.beGone
 import org.fossify.commons.helpers.PERMISSION_RECORD_AUDIO
@@ -30,7 +26,6 @@ import br.com.guga.gravadorsuper.databinding.ActivityMainBinding
 import br.com.guga.gravadorsuper.extensions.config
 import br.com.guga.gravadorsuper.extensions.ensureStoragePermission
 import br.com.guga.gravadorsuper.extensions.handlePermission
-import br.com.guga.gravadorsuper.helpers.RECORDER_RUNNING_NOTIF_ID
 import org.greenrobot.eventbus.EventBus
 
 class MainActivity : SimpleActivity() {
@@ -73,9 +68,9 @@ class MainActivity : SimpleActivity() {
     }
 
     private fun setupOptionsMenu() {
-        binding.mainMenu.toolbar?.inflateMenu(R.menu.menu_main)
+        binding.mainMenu.toolbar?.inflateMenu(R.menu.menu)
         binding.mainMenu.toggleHideOnScroll(false)
-        binding.mainMenu.setupWithViewPager(binding.viewPager)
+        // binding.mainMenu.setupWithViewPager(binding.viewPager)
         binding.mainMenu.onSearchOpenListener = {
             if (binding.viewPager.currentItem == 0) {
                 binding.viewPager.currentItem = 1
@@ -159,6 +154,7 @@ class MainActivity : SimpleActivity() {
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
             override fun onPageSelected(position: Int) {
                 binding.mainTabsHolder.getTabAt(position)?.select()
+                refreshMenuItems()
             }
             override fun onPageScrollStateChanged(state: Int) {}
         })
