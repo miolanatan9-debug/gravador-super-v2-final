@@ -225,3 +225,11 @@ fun android.view.View.beGone() {
 fun android.view.View.beVisible() {
     visibility = android.view.View.VISIBLE
 }
+
+fun BaseSimpleActivity.handleSAFDialog(path: String, callback: (success: Boolean) -> Unit) {
+    callback(true)
+}
+
+fun BaseSimpleActivity.handleSAFDialogSdk30(path: String, showRationale: Boolean = true, callback: (success: Boolean) -> Unit) {
+    callback(true)
+}
