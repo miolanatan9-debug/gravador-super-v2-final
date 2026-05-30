@@ -29,5 +29,16 @@ open class SimpleActivity : BaseSimpleActivity() {
 
     override fun getAppLauncherName() = getString(R.string.app_launcher_name)
 
+    override fun handleSAFDialog(path: String, callback: (success: Boolean) -> Unit): Boolean {
+        callback(true)
+        return true
+    }
+
+    override fun handleSAFDialogSdk30(path: String, showRationale: Boolean, callback: (success: Boolean) -> Unit): Boolean {
+        callback(true)
+        return true
+    }
+
+
     override fun getRepositoryName() = REPOSITORY_NAME
 }
