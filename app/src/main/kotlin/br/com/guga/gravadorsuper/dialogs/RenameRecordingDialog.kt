@@ -80,11 +80,9 @@ class RenameRecordingDialog(
         try {
             val path = "${activity.config.saveRecordingsFolder}/${recording.title}"
             val newPath = "${path.getParentPath()}/$newDisplayName"
-            activity.handleSAFDialogSdk30(path) {
-                val success = activity.renameDocumentSdk30(path, newPath)
-                if (success) {
-                    EventBus.getDefault().post(Events.RecordingCompleted())
-                }
+            val success = activity.renameDocumentSdk30(path, newPath)
+            if (success) {
+                EventBus.getDefault().post(Events.RecordingCompleted())
             }
         } catch (e: Exception) {
             activity.showErrorToast(e)
