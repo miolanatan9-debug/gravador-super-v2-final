@@ -21,6 +21,7 @@ import br.com.guga.gravadorsuper.dialogs.RenameRecordingDialog
 import br.com.guga.gravadorsuper.dialogs.StoragePermissionDialog
 import br.com.guga.gravadorsuper.models.Recording
 import java.io.File
+import java.util.ArrayList
 
 fun BaseSimpleActivity.showRenameRecordingDialog(recording: Recording, callback: () -> Unit) {
     RenameRecordingDialog(this, recording) {
@@ -51,21 +52,7 @@ fun BaseSimpleActivity.launchFolderPicker(
         showFAB = true,
         showRationale = false
     ) { path ->
-        handleSAFDialog(path) { grantedSAF ->
-            if (!grantedSAF) {
-                callback(null)
-                return@handleSAFDialog
-            }
-
-            handleSAFDialogSdk30(path, showRationale = false) { grantedSAF30 ->
-                if (!grantedSAF30) {
-                    callback(null)
-                    return@handleSAFDialogSdk30
-                }
-
-                callback(path)
-            }
-        }
+        callback(path)
     }
 }
 
@@ -224,12 +211,4 @@ fun android.view.View.beGone() {
 
 fun android.view.View.beVisible() {
     visibility = android.view.View.VISIBLE
-}
-
-fun BaseSimpleActivity.handleSAFDialog(path: String, callback: (success: Boolean) -> Unit) {
-    callback(true)
-}
-
-fun BaseSimpleActivity.handleSAFDialogSdk30(path: String, showRationale: Boolean = true, callback: (success: Boolean) -> Unit) {
-    callback(true)
 }
